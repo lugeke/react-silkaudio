@@ -1,0 +1,15 @@
+.playButton {
+  position: absolute;
+  top: 41%;
+  left: 41%;
+}
+.audiobook > div {
+  position: relative;
+}
+.card .header {
+  height: 2em;
+}
+
+ .bookTitle {
+   line-height: 95%;
+} 
