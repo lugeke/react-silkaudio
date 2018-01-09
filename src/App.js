@@ -96,7 +96,8 @@ class AudiobookPlayList extends Component {
       h.chapterHistory[nextChapter] = 0;
       h.recentChapter = nextChapter;
     }
-    this.setState({recentChapter:h.recentChapter})
+    console.log(`h.recentChapter:${h.recentChapter}`);
+    this.setState({recentChapter:h.recentChapter});
 
   }
 
@@ -147,7 +148,12 @@ class AudiobookPlay extends Component {
 
 
   componentDidMount() {
-    this.audio = document.getElementById(this.props.audiobook.id);
+    this.audio = document.createElement('audio');
+    this.audio.id = this.props.audiobook.id;
+    this.audio.src = `/${this.props.audiobook.id}/${this.props.recentChapter}.mp3`;
+    console.log('this.audio.src',this.audio.src);
+    this.audio.type = 'audio/mpeg';
+    this.audio.preload = 'auto';
     this.audio.currentTime = this.props.chapterProgress;
     this.audio.onended = () => this.props.onAudioEnded({id: this.props.audiobook.id});
   }
@@ -161,6 +167,10 @@ class AudiobookPlay extends Component {
 
     if ( !nextProps.recentChapter) {// audiobook finish
       this.setState({pause:true});
+    } else if (nextProps.recentChapter !== this.props.recentChapter ) {
+      this.audio.src = `/${this.props.audiobook.id}/${this.props.recentChapter}.mp3`;
+      console.log('audioPlay')
+      this.audio.play();
     }
 
   }
@@ -179,7 +189,7 @@ class AudiobookPlay extends Component {
 
   handlePlayClick = (e) => {
 
-    
+    console.log('playClick');
     if (this.state.pause) {
       this.audio.play();
       this.props.onPlayClick({id: this.props.audiobook.id});
@@ -224,20 +234,12 @@ class AudiobookPlay extends Component {
             <FlexParagraph text={description} />
           </Card.Description>
           
-          <audio id={this.props.audiobook.id} preload='auto' src={`/${this.props.audiobook.id}/${this.props.recentChapter}.mp3`}></audio>
         </Card.Content>
 
       </Card>
     )
   }
 
-
-  componentDidUpdate(prevProps, prevState) {
-    console.log('componentDidUpdate', prevProps, this.props)
-    if (!this.props.recentChapter && prevProps.recentChapter !== this.props.recentChapter ) {
-      this.audio.paly();
-    }
-  }
 }
 
 
