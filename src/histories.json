@@ -10,12 +10,14 @@
             "title": "Astrophysics for People in a Hurry",
             "url": "http://localhost:5000/api/v1.0/audiobooks/?id=1"
         },
-        "chapterHistory": {
-            "11 - Ch02 - The Craving Brain; How To Create New Habits - Part 05": 45,
-            "05 - Ch01 - The Habit Loop; How Habits Work - Part 03": 90
-        },
-        "recentListen": 1515386324335,
-        "recentChapter": "11 - Ch02 - The Craving Brain; How To Create New Habits - Part 05"
+        "progress":{
+            "recentChapter":"05 - Ch01 - The Habit Loop; How Habits Work - Part 03",
+            "all":{
+                "11 - Ch02 - The Craving Brain; How To Create New Habits - Part 05": 45,
+                "05 - Ch01 - The Habit Loop; How Habits Work - Part 03": 90
+            }
+        } ,
+        "recentListen": 1515386324335
     },
     {
         "audiobook": {
@@ -68,13 +70,15 @@
             "title": "The Power of Habit",
             "url": "http://localhost:5000/api/v1.0/audiobooks/?id=1"
         },
-        "chapterHistory": {
-            "04 - Ch01 - The Habit Loop; How Habits Work - Part 02": 50,
-            "05 - Ch01 - The Habit Loop; How Habits Work - Part 03": 50,
-            "01 - Introduction": 10, 
-            "39 - Ch09 - The Neurology of Free Will; Are We Responsible For Our Habits - Part 04": 900
+        "progress": {
+            "recentChapter": "01 - Introduction",
+            "all": {
+                "04 - Ch01 - The Habit Loop; How Habits Work - Part 02": 50,
+                "05 - Ch01 - The Habit Loop; How Habits Work - Part 03": 50,
+                "01 - Introduction": 10,
+                "39 - Ch09 - The Neurology of Free Will; Are We Responsible For Our Habits - Part 04": 900
+            }
         },
-        "recentChapter": "01 - Introduction",
         "recentListen": 1
     },
     {
@@ -120,10 +124,13 @@
             "title": "A Short History of Nearly Everything",
             "url": "http://localhost:5000/api/v1.0/audiobooks/?id=1"
         },
-        "chapterHistory": {
-            "01 How To Build A Universe": 45
+        "progress": {
+            "recentChapter": "01 How To Build A Universe",
+            "all": {
+                "01 How To Build A Universe": 45
+            }
+            
         },
-        "recentChapter": "01 How To Build A Universe",
         "recentListen": 1515386324335
     }
 ]
