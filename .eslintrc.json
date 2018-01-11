@@ -6,7 +6,11 @@
     "root": true,
     "rules": {
       "quotes": ["off"],
-      "max-len": ["error", { "code": 80, "ignoreTrailingComments": true }],
+      "max-len": ["error", {
+        "ignoreTemplateLiterals": true,
+        "code": 80, 
+        "ignoreTrailingComments": true
+      }],
       "quote-props": [1, "consistent-as-needed"],
       "no-cond-assign": [2, "except-parens"],
       "no-else-return": 0,
