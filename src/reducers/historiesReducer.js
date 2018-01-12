@@ -142,12 +142,13 @@ const historiesReducer = (state = [
         ),
         recentListen: Date.now(),
       };
-
-      return [
+      const r = [
         ...state.slice(0, historyIndex),
         newHistory,
         ...state.slice(historyIndex + 1, state.length),
       ];
+      localStorage.setItem('histories', JSON.stringify(r));
+      return r;
     }
     default: {
       return state;
