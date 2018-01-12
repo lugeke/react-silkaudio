@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Button, Card, Image } from 'semantic-ui-react';
+import React from 'react';
+import { Card } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import AudiobookPlay from './AudiobookPlay';
 
@@ -47,6 +47,7 @@ const mapDispatchToProps = dispatch => ({
   },
 
   handleAudioEnded: ({ id }) => {
+    console.log(`handleAudioEnded ${id}`);
     dispatch({
       type: 'AUDIO.end',
       id,

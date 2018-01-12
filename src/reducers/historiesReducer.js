@@ -167,24 +167,23 @@ const historiesReducer = (state = [
 function progressReducer(state, action) {
   switch (action.type) {
     case 'AUDIO.pause': {
-      const { recentChapter } = state;
       const t = {};
       t[state.recentChapter] = action.chapterProgress;
       return { ...state, all: { ...state.all, ...t } };
     }
     case 'AUDIO.end': {
-      const { h } = action;
-      console.log(h);
-      const currentChapter = state.recentChapter;
-      console.log(currentChapter);
+      const { recentChapter } = state;
+      const { chapter } = action;
+      console.log('currentChapter ', recentChapter);
       // choose next chapter
-      const nextChapterIndex = action.chapter.indexOf(currentChapter) + 1;
-      const nextChapter = nextChapterIndex === action.chapter.length ?
-        '' : action.chapter[nextChapterIndex];
+      const nextChapterIndex = chapter.indexOf(recentChapter) + 1;
+      const nextChapter = nextChapterIndex === chapter.length ?
+        '' : chapter[nextChapterIndex];
 
       const t = {};
-      t[currentChapter] = 0;
+      t[recentChapter] = 0;
       t[nextChapter] = 0;
+      console.log('nextChapter ', nextChapter);
       return { recentChapter: nextChapter, all: { ...state.all, ...t } };
     }
     default: {

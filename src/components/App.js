@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import { Button, Card, Icon, Image, Menu } from 'semantic-ui-react';
+import React from 'react';
 
 import './App.css';
 import HistoryPage from './HistoryPage';

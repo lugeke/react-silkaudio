@@ -22,13 +22,13 @@ class AudiobookPlay extends Component {
     });
   }
 
-  getAudioRecourseUrl(type) {
+  getAudioRecourseUrl(type, p = this.props) {
     switch (type) {
       case 'mp3': {
-        return `/audio/${this.props.audiobook.id}/${this.props.recentChapter}.mp3`;
+        return `/audio/${p.audiobook.id}/${p.recentChapter}.mp3`;
       }
       case 'img': {
-        return `/audio/${this.props.audiobook.id}/cover.jpg`;
+        return `/audio/${p.audiobook.id}/cover.jpg`;
       }
       default: {
         return '';
@@ -46,8 +46,8 @@ class AudiobookPlay extends Component {
     if (!nextProps.recentChapter) { // audiobook finish
       this.setState({ pause: true });
     } else if (nextProps.recentChapter !== this.props.recentChapter) {
-      this.audio.src = this.getAudioRecourseUrl('mp3');
-      console.log('audioPlay');
+      this.audio.src = this.getAudioRecourseUrl('mp3', nextProps);
+      console.log('audioPlay ', this.audio.src);
       this.audio.play();
     }
   }
@@ -82,7 +82,7 @@ class AudiobookPlay extends Component {
     const { title, author, description } = this.props.audiobook;
 
     return (
-      <Card className="audiobook">
+      <Card className='audiobook'>
         <div>
           <Image src={this.getAudioRecourseUrl('img')} />
 
