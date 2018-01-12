@@ -63,6 +63,7 @@ class AudiobookPlay extends Component {
   handlePlayClick = (e) => {
     console.log(`playClick ${this.audio.src}`);
     if (this.state.pause) {
+      this.audio.currentTime = this.props.chapterProgress;
       this.audio.play();
       this.props.onPlayClick({ id: this.props.audiobook.id });
     } else {
