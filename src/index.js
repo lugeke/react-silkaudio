@@ -13,8 +13,9 @@ import logo from './logo.svg';
 function getState() {
   let histories = localStorage.getItem('histories');
   if (histories) {
-    console.log(histories);
     histories = JSON.parse(histories);
+    console.log(histories);
+    histories = histories.sort((a, b) => b.recentListen - a.recentListen);
     return {
       histories,
     };

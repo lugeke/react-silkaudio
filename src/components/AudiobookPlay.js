@@ -9,19 +9,6 @@ class AudiobookPlay extends Component {
   }
 
 
-  componentDidMount() {
-    this.audio = document.createElement('audio');
-    this.audio.id = this.props.audiobook.id;
-    this.audio.src = this.getAudioRecourseUrl('mp3');
-    console.log('this.audio.src', this.audio.src);
-    this.audio.type = 'audio/mpeg';
-    this.audio.preload = 'auto';
-    this.audio.currentTime = this.props.chapterProgress;
-    this.audio.onended = () => this.props.onAudioEnded({
-      id: this.props.audiobook.id,
-    });
-  }
-
   getAudioRecourseUrl(type, p = this.props) {
     switch (type) {
       case 'mp3': {
@@ -29,6 +16,9 @@ class AudiobookPlay extends Component {
       }
       case 'img': {
         return `/audio/${p.audiobook.id}/cover.jpg`;
+      }
+      case 'hls': {
+        return `/audio/${p.audiobook.id}/${p.recentChapter}/prog_index.m3u8`;
       }
       default: {
         return '';
@@ -64,7 +54,22 @@ class AudiobookPlay extends Component {
     console.log(`playClick ${this.audio.src}`);
     if (this.state.pause) {
       this.audio.currentTime = this.props.chapterProgress;
-      this.audio.play();
+      console.log(`audio.currentTime ${this.audio.currentTime} chapterProgress ${this.props.chapterProgress}`);
+
+      const playPromise = this.audio.play();
+      if (playPromise !== undefined) {
+        playPromise.then(_ => {
+          // this.audio.pause();
+          console.log('autoplay');
+          this.audio.currentTime = this.props.chapterProgress;
+          console.log(`audio.currentTime ${this.audio.currentTime} chapterProgress ${this.props.chapterProgress}`);
+        }, _ => {
+          console.log('promise reject');
+        })
+          .catch(error => {
+            console.log('promise error ', error);
+          });
+      }
       this.props.onPlayClick({ id: this.props.audiobook.id });
     } else {
       this.audio.pause();
@@ -94,6 +99,12 @@ class AudiobookPlay extends Component {
             onClick={this.handlePlayClick}
             size='huge'
           />
+          <audio
+            ref='audio'
+            preload='metadata'
+            id={this.props.audiobook.id}
+            src={this.getAudioRecourseUrl('hls')}
+          />
         </div>
 
         <Card.Content>
@@ -119,6 +130,16 @@ class AudiobookPlay extends Component {
 
       </Card>
     );
+  }
+
+  componentDidMount() {
+    console.log('componentDidMount');
+    this.audio = this.refs.audio;
+    this.audio.currentTime = this.props.chapterProgress;
+    this.audio.onended = () => this.props.onAudioEnded({
+      id: this.props.audiobook.id,
+    });
+    console.log(`audio.currentTime ${this.audio.currentTime} chapterProgress ${this.props.chapterProgress}`);
   }
 }
 
