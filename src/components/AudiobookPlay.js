@@ -39,7 +39,6 @@ class AudiobookPlay extends Component {
     if (this.props.audiobook.id !== nextProps.playId && !this.state.pause) {
       this.handlePlayClick();
     }
-
   }
 
 
@@ -128,7 +127,10 @@ class AudiobookPlay extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.recentChapter !== this.props.recentChapter && this.props.recentChapter) {
+    // change to next chapter, need play audio
+    if (
+      prevProps.recentChapter !== this.props.recentChapter
+      && this.props.recentChapter) {
       this.handlePlayClick();
     }
   }
