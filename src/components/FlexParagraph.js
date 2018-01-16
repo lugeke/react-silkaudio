@@ -11,7 +11,7 @@ class FlexParagraph extends Component {
 
   render() {
     const { text } = this.props;
-    const limitLength = 300;
+    const limitLength = 150;
     if (this.state.displayLess) {
       if (text.length > limitLength) {
         return (
