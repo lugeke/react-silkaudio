@@ -1,9 +1,10 @@
-import { FETCH_AUDIOBOOKS } from '../actions';
+import { FETCH_AUDIOBOOKS, AUDIO_PAUSE,
+  AUDIO_END } from '../actions';
 
 const audiobooksReducer = (state = [], action) => {
   switch (action.type) {
-    case 'AUDIO.pause':
-    case 'AUDIO.end': {
+    case AUDIO_PAUSE:
+    case AUDIO_END: {
       const audiobookIndex = state.findIndex(a => a.audiobook.id === action.id);
       const oldaudiobook = state[audiobookIndex];
       const newaudiobook = {
@@ -53,12 +54,12 @@ const audiobooksReducer = (state = [], action) => {
 */
 function progressReducer(state, action) {
   switch (action.type) {
-    case 'AUDIO.pause': {
+    case AUDIO_PAUSE: {
       const t = {};
       t[state.recentChapter] = action.chapterProgress;
       return { ...state, all: { ...state.all, ...t } };
     }
-    case 'AUDIO.end': {
+    case AUDIO_END: {
       const { recentChapter } = state;
       const { chapter } = action;
       console.log('currentChapter ', recentChapter);

@@ -2,7 +2,7 @@ import React from 'react';
 import { Card } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import AudiobookPlay from './AudiobookPlay';
-
+import { audioPlay, audioPause, audioEnd } from '../actions';
 
 const AudiobookPlayList = (props) => {
   console.log('AudiobookPlayList render');
@@ -31,25 +31,15 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => ({
   handlePlayClick: ({ id }) => {
-    dispatch({
-      type: 'AUDIO.play',
-      id,
-    });
+    dispatch(audioPlay(id));
   },
 
   handlePauseClick: ({ id, chapterProgress }) => {
-    dispatch({
-      type: 'AUDIO.pause',
-      id,
-      chapterProgress,
-    });
+    dispatch(audioPause(id, chapterProgress));
   },
 
   handleAudioEnded: ({ id }) => {
-    dispatch({
-      type: 'AUDIO.end',
-      id,
-    });
+    dispatch(audioEnd(id));
   },
 
 });
