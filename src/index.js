@@ -14,18 +14,7 @@ import logo from './logo.svg';
 
 const loggerMiddleware = createLogger();
 
-function getState() {
-  let histories = localStorage.getItem('histories');
-  if (histories) {
-    histories = JSON.parse(histories);
-    console.log(histories);
-    histories = histories.sort((a, b) => b.recentListen - a.recentListen);
-    return {
-      histories,
-    };
-  }
-  return undefined;
-}
+
 const store = createStore(reducer, applyMiddleware(
   thunkMiddleware,
   loggerMiddleware,
