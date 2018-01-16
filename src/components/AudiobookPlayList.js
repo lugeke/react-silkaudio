@@ -31,7 +31,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = dispatch => ({
   handlePlayClick: ({ id }) => {
-    console.log(`handlePlayClick ${id}`);
     dispatch({
       type: 'AUDIO.play',
       id,
@@ -39,7 +38,6 @@ const mapDispatchToProps = dispatch => ({
   },
 
   handlePauseClick: ({ id, chapterProgress }) => {
-    console.log(id, chapterProgress);
     dispatch({
       type: 'AUDIO.pause',
       id,
@@ -48,7 +46,6 @@ const mapDispatchToProps = dispatch => ({
   },
 
   handleAudioEnded: ({ id }) => {
-    console.log(`handleAudioEnded ${id}`);
     dispatch({
       type: 'AUDIO.end',
       id,

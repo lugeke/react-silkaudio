@@ -34,7 +34,6 @@ const audiobooksReducer = (state = [], action) => {
       return r;
     }
     case FETCH_AUDIOBOOKS: {
-      console.log(action);
       return action.audiobooks;
     }
     default: {
