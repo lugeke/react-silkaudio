@@ -3,17 +3,18 @@ import { Card } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import AudiobookPlay from './AudiobookPlay';
 
+
 const AudiobookPlayList = (props) => {
   console.log('AudiobookPlayList render');
   return (
     <Card.Group>
-      {props.histories.map(h => (
+      {props.audiobooks.map(a => (
         <AudiobookPlay
           playId={props.playId}
-          key={h.audiobook.id}
-          audiobook={h.audiobook}
-          recentChapter={h.progress.recentChapter}
-          chapterProgress={h.progress.all[h.progress.recentChapter]}
+          key={a.audiobook.id}
+          audiobook={a.audiobook}
+          recentChapter={a.progress.recentChapter}
+          chapterProgress={a.progress.all[a.progress.recentChapter]}
           onPauseClick={props.handlePauseClick}
           onAudioEnded={props.handleAudioEnded}
           onPlayClick={props.handlePlayClick}
@@ -23,8 +24,8 @@ const AudiobookPlayList = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  const { histories, playId } = state;
-  return { histories, playId };
+  const { audiobooks, playId } = state;
+  return { audiobooks, playId };
 };
 
 

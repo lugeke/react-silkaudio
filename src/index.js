@@ -1,14 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'semantic-ui-css/semantic.min.css';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import thunkMiddleware from 'redux-thunk';
+import { createLogger } from 'redux-logger';
+
 import './index.css';
 import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
 import reducer from './reducers';
 import logo from './logo.svg';
 
+const loggerMiddleware = createLogger();
 
 function getState() {
   let histories = localStorage.getItem('histories');
@@ -22,7 +26,12 @@ function getState() {
   }
   return undefined;
 }
-const store = createStore(reducer, getState());
+const store = createStore(reducer, applyMiddleware(
+  thunkMiddleware,
+  loggerMiddleware,
+));
+
+
 ReactDOM.render(
   <Provider store={store}>
     <App />
