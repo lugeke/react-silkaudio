@@ -64,16 +64,9 @@ class AudiobookPlay extends Component {
             console.log('promise error ', error);
           });
       }
-      this.props.onPlayClick({ id: this.props.audiobook.id });
     } else {
       this.audio.pause();
-      this.props.onPauseClick({
-        id: this.props.audiobook.id,
-        chapterProgress: this.audio.currentTime,
-      });
     }
-    const pause = this.audio.paused;
-    this.setState({ pause });
   }
 
   render() {
@@ -135,6 +128,18 @@ class AudiobookPlay extends Component {
     }
   }
 
+  audioOnPlay = () => {
+    this.setState({ pause: false });
+    this.props.onPlayClick({ id: this.props.audiobook.id });
+  }
+  audioOnPause = () => {
+    this.setState({ pause: true });
+    this.props.onPauseClick({
+      id: this.props.audiobook.id,
+      chapterProgress: this.audio.currentTime,
+    });
+  }
+
   componentDidMount() {
     this.audio = this.refs.audio;
     this.audio.onended = () => {
@@ -142,6 +147,8 @@ class AudiobookPlay extends Component {
         id: this.props.audiobook.id,
       });
     };
+    this.audio.onplay = this.audioOnPlay;
+    this.audio.onpause = this.audioOnPause;
   }
 }
 
