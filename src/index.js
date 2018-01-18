@@ -1,30 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import 'semantic-ui-css/semantic.min.css';
-import { createStore, applyMiddleware } from 'redux';
-import { Provider } from 'react-redux';
-import thunkMiddleware from 'redux-thunk';
-import { createLogger } from 'redux-logger';
+import {
+  BrowserRouter as Router,
+} from 'react-router-dom';
 
 import './index.css';
-import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
-import reducer from './reducers';
+
 import logo from './logo.svg';
+import configureStore from './configureStore';
+import Root from './components/Root';
 
-const loggerMiddleware = createLogger();
-
-
-const store = createStore(reducer, applyMiddleware(
-  thunkMiddleware,
-  loggerMiddleware,
-));
-
+const store = configureStore();
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <Root store={store} />,
   document.getElementById('root'),
 );
 registerServiceWorker();
