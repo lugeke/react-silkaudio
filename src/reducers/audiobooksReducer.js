@@ -15,11 +15,7 @@ const audiobooksReducer = (state = [], action) => {
         ),
         recentListen: Date.now(),
       };
-      const r = [
-        ...state.slice(0, audiobookIndex),
-        newaudiobook,
-        ...state.slice(audiobookIndex + 1, state.length),
-      ];
+
       let list = localStorage.getItem('audiobookIdList');
       if (list) {
         list = JSON.parse(list);
@@ -32,7 +28,12 @@ const audiobooksReducer = (state = [], action) => {
         localStorage.setItem(`audiobookIdList`, JSON.stringify(list));
       }
       localStorage.setItem(`audiobook_${newaudiobook.audiobook.id}`, JSON.stringify(newaudiobook));
-      return r;
+      return [
+        ...state.slice(0, audiobookIndex),
+        newaudiobook,
+        ...state.slice(audiobookIndex + 1, state.length),
+
+      ];
     }
     case FETCH_AUDIOBOOKS: {
       return action.audiobooks;
@@ -62,17 +63,20 @@ function progressReducer(state, action) {
     case AUDIO_END: {
       const { recentChapter } = state;
       const { chapter } = action;
-      console.log('currentChapter ', recentChapter);
       // choose next chapter
       const nextChapterIndex = chapter.indexOf(recentChapter) + 1;
       const nextChapter = nextChapterIndex === chapter.length ?
         '' : chapter[nextChapterIndex];
 
-      const t = {};
-      t[recentChapter] = 0;
-      t[nextChapter] = 0;
-      console.log('nextChapter ', nextChapter);
-      return { recentChapter: nextChapter, all: { ...state.all, ...t } };
+
+      return {
+        recentChapter: nextChapter,
+        all: {
+          ...state.all,
+          [recentChapter]: 0,
+          [nextChapter]: 0,
+        },
+      };
     }
     default: {
       return state;
