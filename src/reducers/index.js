@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux';
-import playIdReducer from './playIdReducer';
+import playStatusReducer from './playStatusReducer';
 import audiobooksReducer from './audiobooksReducer';
+import recentListenReducer from './recentListenReducer';
 
 const reducer = combineReducers({
-  playId: playIdReducer,
+  playStatus: playStatusReducer,
   audiobooks: audiobooksReducer,
+  recentListen: recentListenReducer,
 });
 
 export default reducer;
