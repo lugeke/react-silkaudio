@@ -8,6 +8,7 @@ export const ON_AUDIO_PLAY = 'ON_AUDIO_PLAY';
 export const ON_AUDIO_PAUSE = 'ON_AUDIO_PAUSE';
 export const ON_AUDIO_END = 'ON_AUDIO_END';
 export const ADD_RECENT_LISTEN = 'ADD_RECENT_LISTEN';
+export const SAVE_PROGRESS = 'SAVE_PROGRESS';
 
 export function onAudioPlay(id) {
   return {
@@ -16,6 +17,13 @@ export function onAudioPlay(id) {
   };
 }
 
+export function saveProgress(id, progress) {
+  return {
+    type: SAVE_PROGRESS,
+    id,
+    progress,
+  };
+}
 
 export function onAudioPause(id, progress) {
   return {

@@ -1,36 +1,39 @@
 import { connect } from 'react-redux';
 import React, { Component } from 'react';
-import { onAudioPlay, onAudioPause, onAudioEnd } from '../actions';
+import { onAudioPlay, onAudioPause,
+  onAudioEnd, saveProgress } from '../actions';
 
 
 class AudioPlay extends Component {
   componentWillReceiveProps(nextProps) {
-    if (nextProps.playId !== this.props.playId && !this.props.pause) {
-      // change audiobook, need save progress
-      this.props.dispatch(onAudioPause(
-        this.props.playId,
-        this.audio.currentTime,
-      ));
+    if (nextProps.playId !== this.props.playId) {
+      if (!this.props.pause) {
+        this.props.dispatch(saveProgress(
+          this.props.playId,
+          this.audio.currentTime,
+        ));
+      }
+      this.audio.src = `/audio/${nextProps.playId}/hls/output.m3u8`;
+      this.audio.load();
     }
   }
 
   render() {
-    return (<audio
-      ref='audio'
-      preload='metadata'
-      src={`/audio/${this.props.playId}/hls/output.m3u8`}
-    />);
+    return null;
   }
 
   audioOnPlay = () => {
     this.props.dispatch(onAudioPlay(this.props.playId));
   }
   audioOnPause = () => {
-    this.props.dispatch(onAudioPause(this.props.playId, this.audio.currentTime));
+    this.props.dispatch(onAudioPause(
+      this.props.playId,
+      this.audio.currentTime,
+    ));
   }
 
   componentDidMount() {
-    this.audio = this.refs.audio;
+    this.audio = document.createElement('audio');
     this.audio.onended = () => {
       this.props.dispatch(onAudioEnd(this.props.playId));
     };
@@ -39,14 +42,6 @@ class AudioPlay extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // change to next chapter, need play audio
-    // if (
-    //   prevProps.recentChapter !== this.props.recentChapter
-    //   && this.props.recentChapter) {
-    //   this.handlePlayClick();
-    // }
-    // if (this.props.playId === 0) { return; }
-
     if (this.props.pause) {
       this.audio.pause();
     } else {
@@ -69,7 +64,17 @@ class AudioPlay extends Component {
 }
 const mapStatesToProps = (state) => {
   const { playStatus, recentListen } = state;
-  return { playId: playStatus.playId, pause: playStatus.pause, progress: recentListen.allIds[playStatus.playId].progress };
+  let progress;
+  if (playStatus.playId === 0) {
+    progress = 0;
+  } else {
+    progress = recentListen.allIds[playStatus.playId].progress;
+  }
+  return {
+    playId: playStatus.playId,
+    pause: playStatus.pause,
+    progress,
+  };
 };
 
 export default connect(mapStatesToProps)(AudioPlay);

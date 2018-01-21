@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { Container } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import RecentAudiobookPlayList from './AudiobookPlayList';
 
 import { fetchAudiobooks } from '../actions';
 import AudiobookPlay from './AudiobookPlay';
 
 class AllAudiobooks extends Component {
   render() {
-    const { byIds, allIds } = this.props.audiobooks;
+    const { byIds } = this.props.audiobooks;
     return (
       <Container>
         <div className='playlist'>

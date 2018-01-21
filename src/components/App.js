@@ -3,19 +3,15 @@ import PropTypes from 'prop-types';
 import {
   Button,
   Container,
-  Divider,
   Grid,
   Header,
-  Icon,
-  Image,
   List,
   Menu,
   Segment,
-  Visibility,
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import {
-  BrowserRouter as Router,
+  withRouter,
   Route,
   Link,
   Switch,
@@ -121,14 +117,13 @@ class App extends Component {
   render() {
     const {
       playStatus, audiobooks, recentListen,
-      handlePlayClick, handlePauseClick, handleAudioEnded,
     } = this.props;
     return (
       <HomepageLayout >
         <Switch>
           <Route
             path='/audiobooks/recent'
-            render={() =>
+            render={(props) =>
               (<RecentAudiobooks
                 playId={playStatus.playId}
                 pause={playStatus.pause}
@@ -139,7 +134,7 @@ class App extends Component {
 
           <Route
             path='/audiobooks/all'
-            render={() =>
+            render={(props) =>
               (<AllAudiobooks
                 playId={playStatus.playId}
                 pause={playStatus.pause}
@@ -151,7 +146,7 @@ class App extends Component {
           <Route
             path='/'
             exact
-            render={() =>
+            render={(props) =>
               (<RecentAudiobooks
                 playId={playStatus.playId}
                 pause={playStatus.pause}
@@ -169,4 +164,4 @@ class App extends Component {
 
 const mapStateToProps = (state) => (state);
 
-export default connect(mapStateToProps)(App);
+export default withRouter(connect(mapStateToProps)(App));

@@ -1,4 +1,5 @@
-import { PLAY_AUDIO, PAUSE_AUDIO, ON_AUDIO_PLAY, ON_AUDIO_PAUSE } from '../actions';
+import { PLAY_AUDIO, PAUSE_AUDIO,
+  ON_AUDIO_PLAY, ON_AUDIO_PAUSE } from '../actions';
 
 const playStatusReducer = (state = {
   playId: 0,

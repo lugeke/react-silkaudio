@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { Container } from 'semantic-ui-react';
 import { connect } from 'react-redux';
+import idbKeyval from 'idb-keyval';
+
 import AudiobookPlay from './AudiobookPlay';
 import { addRecentAudiobooks } from '../actions';
 
 class RecentAudiobooks extends Component {
   render() {
-    const { byIds, allIds } = this.props.recentListen;
+    console.log('render Recent');
+    const { byIds } = this.props.recentListen;
     return (
       <Container>
         <div className='playlist'>
@@ -15,6 +18,7 @@ class RecentAudiobooks extends Component {
               playId={this.props.playId}
               id={id}
               key={id}
+              pause={this.props.pause}
               onPauseClick={this.props.handlePauseClick}
               onAudioEnded={this.props.handleAudioEnded}
               onPlayClick={this.props.handlePlayClick}
@@ -28,11 +32,12 @@ class RecentAudiobooks extends Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
-    let recentListen = localStorage.getItem('recentListen');
-    if (recentListen) {
-      recentListen = JSON.parse(recentListen);
-      dispatch(addRecentAudiobooks(recentListen));
-    }
+    idbKeyval.get('recentListen').then(val => {
+      if (val) {
+        console.log('recentListen', val);
+        dispatch(addRecentAudiobooks(val));
+      }
+    });
   }
 }
 
