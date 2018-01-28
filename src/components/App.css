@@ -12,7 +12,8 @@
   margin-left: 2rem;
   margin-right: 2rem;
   margin-bottom: 2rem;
-  flex: 200px;
+  flex: 100px;
+  max-width: 250px;
 }
 
 .playlist {
