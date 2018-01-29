@@ -9,9 +9,13 @@ const audiobooksReducer = (state = {
   switch (action.type) {
     case FETCH_AUDIOBOOKS: {
       const byIds = action.audiobooks.map(a => a.id);
+      const allIds = action.audiobooks.reduce((acc, cur) => {
+        acc[cur.id] = cur;
+        return acc;
+      }, {});
       return {
         byIds,
-        allIds: action.audiobooks,
+        allIds,
       };
     }
     default: {
