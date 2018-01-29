@@ -1,3 +1,6 @@
+import {
+  getAudiobooks,
+} from '../utils';
 
 export const REQUEST_POPULAR = 'REQUEST_POPULAR';
 export const RECEIVE_POPULAR = 'RECEIVE_POPULAR';
@@ -73,8 +76,10 @@ export function addAudiobooks(audiobooks) {
 
 export function fetchAudiobooks(histories) {
   return dispatch => {
-    return fetch('/api/v1.0/audiobooks/')
-      .then(response => response.json())
-      .then(json => dispatch(addAudiobooks(json.audiobooks)));
+    // return fetch('/api/v1.0/audiobooks/')
+    //   .then(response => response.json())
+    //   .then(json => dispatch(addAudiobooks(json.audiobooks)));
+    return getAudiobooks((audiobooks) =>
+      dispatch(addAudiobooks(audiobooks.results)));
   };
 }
