@@ -16,11 +16,12 @@ import {
   Link,
   Switch,
 } from 'react-router-dom';
-
+import idbKeyval from 'idb-keyval';
 import './App.css';
 import RecentAudiobooks from './RecentAudiobooks';
 import AllAudiobooks from './AllAudiobooks';
 import AudioPlay from './AudioPlay';
+import { addRecentAudiobooks } from '../actions';
 
 const Navigate = (props, { router }) => (
   <Segment
@@ -150,6 +151,16 @@ class App extends Component {
       </HomepageLayout>
 
     );
+  }
+
+  componentDidMount() {
+    const { dispatch } = this.props;
+    idbKeyval.get('recentListen').then(val => {
+      if (val) {
+        console.log('recentListen', val);
+        dispatch(addRecentAudiobooks(val));
+      }
+    });
   }
 }
 

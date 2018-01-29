@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Container } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import idbKeyval from 'idb-keyval';
 
 import AudiobookPlay from './AudiobookPlay';
-import { addRecentAudiobooks } from '../actions';
+
 
 class RecentAudiobooks extends Component {
   render() {
@@ -28,16 +27,6 @@ class RecentAudiobooks extends Component {
       </Container>
 
     );
-  }
-
-  componentDidMount() {
-    const { dispatch } = this.props;
-    idbKeyval.get('recentListen').then(val => {
-      if (val) {
-        console.log('recentListen', val);
-        dispatch(addRecentAudiobooks(val));
-      }
-    });
   }
 }
 
