@@ -19,10 +19,9 @@ const configureStore = () => {
   );
 
 
-  store.subscribe(throttle(() => {
+  store.subscribe(() => {
     idbKeyval.set('recentListen', store.getState().recentListen);
-  }, 1000));
-
+  });
 
   return store;
 };
