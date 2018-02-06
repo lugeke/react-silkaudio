@@ -1,5 +1,7 @@
+import idbKeyval from 'idb-keyval';
+
 import {
-  getAudiobooks,
+  getAudiobooks, loginUser,
 } from '../utils';
 
 export const REQUEST_POPULAR = 'REQUEST_POPULAR';
@@ -12,6 +14,9 @@ export const ON_AUDIO_PAUSE = 'ON_AUDIO_PAUSE';
 export const ON_AUDIO_END = 'ON_AUDIO_END';
 export const ADD_RECENT_LISTEN = 'ADD_RECENT_LISTEN';
 export const SAVE_PROGRESS = 'SAVE_PROGRESS';
+export const LOGIN_REQUEST = 'LOGIN_REQUEST';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 
 export function onAudioPlay(id) {
   return {
@@ -76,10 +81,43 @@ export function addAudiobooks(audiobooks) {
 
 export function fetchAudiobooks(histories) {
   return dispatch => {
-    // return fetch('/api/v1.0/audiobooks/')
-    //   .then(response => response.json())
-    //   .then(json => dispatch(addAudiobooks(json.audiobooks)));
-    return getAudiobooks((audiobooks) =>
+    return getAudiobooks().then(audiobooks =>
       dispatch(addAudiobooks(audiobooks.results)));
+  };
+}
+
+function requestLogin() {
+  return {
+    type: LOGIN_REQUEST,
+  };
+}
+
+export function successLogin(data) {
+  return {
+    type: LOGIN_SUCCESS,
+    data,
+  };
+}
+
+function failLogin(error) {
+  return {
+    type: LOGIN_FAILURE,
+    error,
+  };
+}
+
+function saveLoginUser(data) {
+  idbKeyval.set('user', data);
+}
+
+export function login(username, password) {
+  return dispatch => {
+    dispatch(requestLogin());
+    return loginUser(username, password).then(response => {
+      dispatch(successLogin(response));
+      saveLoginUser(response);
+    }).catch(error => {
+      dispatch(failLogin(error));
+    });
   };
 }

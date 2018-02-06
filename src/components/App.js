@@ -1,69 +1,25 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import {
-  Button,
   Container,
   Grid,
   Header,
   List,
-  Menu,
-  Segment,
-} from 'semantic-ui-react';
+  Segment } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import {
   withRouter,
   Route,
-  Link,
-  Switch,
-} from 'react-router-dom';
+  Switch } from 'react-router-dom';
 import idbKeyval from 'idb-keyval';
+
 import './App.css';
 import RecentAudiobooks from './RecentAudiobooks';
 import AllAudiobooks from './AllAudiobooks';
 import AudioPlay from './AudioPlay';
-import { addRecentAudiobooks } from '../actions';
+import { addRecentAudiobooks, successLogin } from '../actions';
+import Navigate from './Navigate';
+import { authenticateToken } from '../utils';
 
-const Navigate = (props, { router }) => (
-  <Segment
-    inverted
-    textAlign='center'
-    style={{ padding: '1em 0em' }}
-    vertical
-    fixed='top'
-  >
-    <Container>
-      <Menu
-        inverted
-        pointing
-        secondary
-        style={{ padding: '1em 0em' }}
-        size='large'
-      >
-        <Menu.Item active={
-          router.history.location.pathname === '/audiobooks/recent' ||
-          router.history.location.pathname === '/'}
-        >
-          <Link to='/audiobooks/recent'> Recent </Link>
-        </Menu.Item>
-        <Menu.Item
-          active={router.history.location.pathname === '/audiobooks/all'}
-        >
-          <Link to='/audiobooks/all'> All </Link>
-        </Menu.Item>
-        <Menu.Item position='right'>
-          <Button as='a' inverted>Log in</Button>
-          <Button as='a' inverted style={{ marginLeft: '0.5em' }}>
-            Sign Up
-          </Button>
-        </Menu.Item>
-      </Menu>
-    </Container>
-  </Segment>
-);
-
-Navigate.contextTypes = {
-  router: PropTypes.object,
-};
 
 class HomepageLayout extends Component {
   render() {
@@ -159,6 +115,15 @@ class App extends Component {
       if (val) {
         console.log('recentListen', val);
         dispatch(addRecentAudiobooks(val));
+      }
+    });
+    idbKeyval.get('user').then(val => {
+      if (val) {
+        authenticateToken(val.token).then(response => {
+          console.log('authenticateToken', response);
+          response.token = val.token;
+          dispatch(successLogin(response));
+        });
       }
     });
   }

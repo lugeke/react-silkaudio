@@ -15,35 +15,34 @@ function checkStatus(response) {
   }
 }
 
-export function getAudiobooks(success) {
+export function getAudiobooks() {
   return fetch('/api/v1.0/audiobooks/', {
     headers: {
       Accept: 'application/json',
     },
   }).then(checkStatus)
-    .then(parseJSON)
-    .then(success);
+    .then(parseJSON);
 }
 
-export function getHistories(success) {
+export function loginUser(username, password) {
+  const auth = window.btoa(`${username}:${password}`);
+  return fetch('/api/v1.0/accounts/login/', {
+    method: 'post',
+    headers: {
+      Accept: 'application/json',
+      Authorization: `Basic ${auth}`,
+    },
+  }).then(checkStatus)
+    .then(parseJSON);
+}
+
+export function getHistories() {
   return fetch('/api/v1.0/histories/', {
     headers: {
       Accept: 'application/json',
     },
   }).then(checkStatus)
-    .then(parseJSON)
-    .then(success);
-}
-
-export function createHistory(data) {
-  return fetch('/api/v1.0/histories/', {
-    method: 'post',
-    body: JSON.stringify(data),
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    },
-  }).then(checkStatus);
+    .then(parseJSON);
 }
 
 export function updateHistory(data) {
@@ -54,16 +53,17 @@ export function updateHistory(data) {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
-  }).then(checkStatus);
+  }).then(checkStatus)
+    .then(parseJSON);
 }
 
-function deleteHistory(data) {
-  return fetch('/api/v1.0/histories/', {
-    method: 'delete',
-    body: JSON.stringify(data),
+export function authenticateToken(token) {
+  return fetch('/api/v1.0/accounts/user/', {
     headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      Authorization: `Token ${token}`,
     },
-  }).then(checkStatus);
+  }).then(checkStatus)
+    .then(parseJSON);
 }
+
