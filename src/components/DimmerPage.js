@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Dimmer } from 'semantic-ui-react';
 
-const DimmerPage = ComposedComponent => class extends Component {
+const DimmerPage = ComposedComponent => class extends React.Component {
   state = {
     active: true,
   }

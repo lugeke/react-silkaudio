@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class FlexParagraph extends Component {
+class FlexParagraph extends React.Component {
   state = {
     displayLess: true,
   }

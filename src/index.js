@@ -4,7 +4,6 @@ import 'semantic-ui-css/semantic.min.css';
 
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
-import logo from './logo.svg';
 import configureStore from './configureStore';
 import Root from './components/Root';
 

@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
-import React, { Component } from 'react';
+import React from 'react';
 import { onAudioPlay, onAudioPause,
   onAudioEnd, saveProgress } from '../actions';
 
 
-class AudioPlay extends Component {
+class AudioPlay extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.playId !== this.props.playId) {
       if (!this.props.pause) {

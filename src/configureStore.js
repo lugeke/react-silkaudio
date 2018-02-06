@@ -2,7 +2,6 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 import idbKeyval from 'idb-keyval';
-import throttle from 'lodash/throttle';
 
 import reducer from './reducers';
 

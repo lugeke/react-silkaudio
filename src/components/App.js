@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
   Container,
   Grid,
@@ -21,7 +21,7 @@ import Navigate from './Navigate';
 import { authenticateToken } from '../utils';
 
 
-class HomepageLayout extends Component {
+class HomepageLayout extends React.Component {
   render() {
     return (
       <div>
@@ -61,7 +61,7 @@ class HomepageLayout extends Component {
 }
 
 
-class App extends Component {
+class App extends React.Component {
   render() {
     const {
       playStatus, audiobooks, recentListen,

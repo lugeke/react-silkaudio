@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Container } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 
 import { fetchAudiobooks } from '../actions';
 import AudiobookPlay from './AudiobookPlay';
 
-class AllAudiobooks extends Component {
+class AllAudiobooks extends React.Component {
   render() {
     const { byIds } = this.props.audiobooks;
     return (

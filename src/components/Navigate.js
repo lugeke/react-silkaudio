@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import {
   Button,
@@ -16,7 +16,7 @@ import DimmerPage from './DimmerPage';
 
 const Login = DimmerPage(LoginForm);
 
-class Navigate extends Component {
+class Navigate extends React.Component {
   state = {
     showLogin: false,
   }

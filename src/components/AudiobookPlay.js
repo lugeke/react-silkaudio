@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Button, Image } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 
 import { playAudio, pauseAudio } from '../actions';
 
-class AudiobookPlay extends Component {
+class AudiobookPlay extends React.Component {
   constructor(props) {
     super(props);
     const pause = props.playId !== this.props.id || this.props.pause;

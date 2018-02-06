@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Container } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 
 import AudiobookPlay from './AudiobookPlay';
 
 
-class RecentAudiobooks extends Component {
+class RecentAudiobooks extends React.Component {
   render() {
     console.log('render Recent');
     const { byIds } = this.props.recentListen;
