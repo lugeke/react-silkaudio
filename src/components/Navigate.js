@@ -19,11 +19,14 @@ const Login = DimmerPage(LoginForm);
 class Navigate extends React.Component {
   state = {
     showLogin: false,
+    activeItem: 'recent',
   }
   handleLoginClick = (e) => {
     console.log('loginclick');
     this.setState({ showLogin: true });
   }
+
+  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
   renderLoginUsername() {
     if (this.props.isAuthenticated) {
@@ -46,8 +49,7 @@ class Navigate extends React.Component {
   }
 
   render() {
-    const { router } = this.context;
-    console.log('router ', router);
+    const { activeItem } = this.state;
     return (
       <Segment
         inverted
@@ -64,15 +66,18 @@ class Navigate extends React.Component {
             style={{ padding: '1em 0em' }}
             size='large'
           >
-            <Menu.Item active={
-              router.history.location.pathname === '/audiobooks/recent' ||
-              router.history.location.pathname === '/'}
+            <Menu.Item
+              name='recent'
+              active={activeItem === 'recent'}
+              onClick={this.handleItemClick}
             >
               <Link to='/audiobooks/recent'> Recent </Link>
             </Menu.Item>
 
             <Menu.Item
-              active={router.history.location.pathname === '/audiobooks/all'}
+              name='all'
+              active={activeItem === 'all'}
+              onClick={this.handleItemClick}
             >
               <Link to='/audiobooks/all'> All </Link>
             </Menu.Item>
@@ -82,17 +87,12 @@ class Navigate extends React.Component {
             </Menu.Item>
           </Menu>
         </Container>
-        {this.state.showLogin && !this.props.isAuthenticated ?
-          <Login {...this.props} />
-          : null}
+        { this.state.showLogin && !this.props.isAuthenticated ?
+          <Login {...this.props} active /> : null }
       </Segment >
     );
   }
 }
-
-Navigate.contextTypes = {
-  router: PropTypes.object,
-};
 
 const mapStateToProps = (state) => {
   return {
