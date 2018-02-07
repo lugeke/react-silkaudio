@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button, Form, Segment } from 'semantic-ui-react';
-import { connect } from 'react-redux';
+import { Button, Form } from 'semantic-ui-react';
 
 import { login } from '../actions';
 
@@ -8,7 +7,6 @@ class LoginForm extends React.Component {
   handleLogin = () => {
     const { username, password } = this.state;
     if (username && password) {
-      console.log('login.');
       this.props.dispatch(login(username, password));
     }
   }
@@ -21,6 +19,7 @@ class LoginForm extends React.Component {
     username: '',
     password: '',
   }
+
   render() {
     const { username, password } = this.state;
     const { isAuthenticating } = this.props;
