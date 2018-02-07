@@ -9,7 +9,6 @@ import {
 import {
   Link,
 } from 'react-router-dom';
-import PropTypes from 'prop-types';
 
 import LoginForm from './Login';
 import DimmerPage from './DimmerPage';

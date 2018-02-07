@@ -4,10 +4,10 @@ import { createLogger } from 'redux-logger';
 import idbKeyval from 'idb-keyval';
 
 import reducer from './reducers';
-
+import saveRecentListen from './middlewares';
 
 const configureStore = () => {
-  const middleware = [ thunk ];
+  const middleware = [ thunk, saveRecentListen ];
   if (process.env.NODE_ENV !== 'production') {
     middleware.push(createLogger());
   }

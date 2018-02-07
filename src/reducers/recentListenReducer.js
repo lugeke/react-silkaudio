@@ -1,7 +1,16 @@
 import {
-  ADD_RECENT_LISTEN, PLAY_AUDIO,
-  ON_AUDIO_END, ON_AUDIO_PAUSE, SAVE_PROGRESS,
+  PLAY_AUDIO,
+  ON_AUDIO_END, ON_AUDIO_PAUSE, SAVE_PROGRESS, RECENT_SUCCESS,
 } from '../actions';
+
+function normalize(histories) {
+  const byIds = histories.map(h => h.audiobook);
+  const allIds = histories.reduce((acc, cur) => {
+    acc[cur.audiobook] = cur;
+    return acc;
+  }, {});
+  return { byIds, allIds };
+}
 
 const recentListenReducer = (state = {
   byIds: [],
@@ -47,8 +56,8 @@ const recentListenReducer = (state = {
         },
       };
     }
-    case ADD_RECENT_LISTEN: {
-      return action.recentListen;
+    case RECENT_SUCCESS: {
+      return normalize(action.data.results);
     }
     default: {
       return state;

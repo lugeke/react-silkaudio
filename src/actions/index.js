@@ -1,23 +1,28 @@
 import idbKeyval from 'idb-keyval';
 
 import {
-  getAudiobooks, loginUser,
+  getAudiobooks, loginUser, getHistories,
 } from '../utils';
 
-export const REQUEST_POPULAR = 'REQUEST_POPULAR';
-export const RECEIVE_POPULAR = 'RECEIVE_POPULAR';
+
 export const FETCH_AUDIOBOOKS = 'FETCH_AUDIOBOOKS';
+
 export const PLAY_AUDIO = 'PLAY_AUDIO';
 export const PAUSE_AUDIO = 'PAUSE_AUDIO';
 export const ON_AUDIO_PLAY = 'ON_AUDIO_PLAY';
 export const ON_AUDIO_PAUSE = 'ON_AUDIO_PAUSE';
 export const ON_AUDIO_END = 'ON_AUDIO_END';
-export const ADD_RECENT_LISTEN = 'ADD_RECENT_LISTEN';
+
+
+export const FETCH_RECENT_LISTEN_REMOTE = 'FETCH_RECENT_LISTEN_REMOTE';
+
 export const SAVE_PROGRESS = 'SAVE_PROGRESS';
+
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 
+export const RECENT_SUCCESS = 'RECENT_SUCCESS';
 export function onAudioPlay(id) {
   return {
     type: ON_AUDIO_PLAY,
@@ -64,10 +69,19 @@ export function pauseAudio(id, pause) {
   };
 }
 
-export function addRecentAudiobooks(recentListen) {
+export function successRecent(data) {
   return {
-    type: ADD_RECENT_LISTEN,
-    recentListen,
+    type: RECENT_SUCCESS,
+    data,
+  };
+}
+
+export function requestRecentRemote(token) {
+  return dispatch => {
+    return getHistories(token).then(response => {
+      console.log('histories ', response);
+      dispatch(successRecent(response));
+    });
   };
 }
 
@@ -116,6 +130,7 @@ export function login(username, password) {
     return loginUser(username, password).then(response => {
       dispatch(successLogin(response));
       saveLoginUser(response);
+      dispatch(requestRecentRemote(response.token));
     }).catch(error => {
       dispatch(failLogin(error));
     });

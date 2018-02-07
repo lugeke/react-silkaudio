@@ -16,7 +16,8 @@ import './App.css';
 import RecentAudiobooks from './RecentAudiobooks';
 import AllAudiobooks from './AllAudiobooks';
 import AudioPlay from './AudioPlay';
-import { addRecentAudiobooks, successLogin } from '../actions';
+import { requestRecentRemote,
+  successLogin } from '../actions';
 import Navigate from './Navigate';
 import { authenticateToken } from '../utils';
 
@@ -111,18 +112,19 @@ class App extends React.Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
-    idbKeyval.get('recentListen').then(val => {
-      if (val) {
-        console.log('recentListen', val);
-        dispatch(addRecentAudiobooks(val));
-      }
-    });
+    // idbKeyval.get('recentListen').then(val => {
+    //   if (val) {
+    //     console.log('recentListen', val);
+    //     dispatch(requestRecentLocal(val));
+    //   }
+    // });
     idbKeyval.get('user').then(val => {
       if (val) {
         authenticateToken(val.token).then(response => {
           console.log('authenticateToken', response);
           response.token = val.token;
           dispatch(successLogin(response));
+          dispatch(requestRecentRemote(val.token));
         }).catch(e => {
           console.log('authenticateToken error', e.status);
           idbKeyval.delete('user');

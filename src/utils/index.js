@@ -36,22 +36,24 @@ export function loginUser(username, password) {
     .then(parseJSON);
 }
 
-export function getHistories() {
-  return fetch('/api/v1.0/histories/', {
+export function getHistories(token) {
+  return fetch('/api/v1.0/history/', {
     headers: {
       Accept: 'application/json',
+      Authorization: `Token ${token}`,
     },
   }).then(checkStatus)
     .then(parseJSON);
 }
 
-export function updateHistory(data) {
-  return fetch('/api/v1.0/histories/', {
+export function updateHistory(data, token) {
+  return fetch('/api/v1.0/history/', {
     method: 'put',
     body: JSON.stringify(data),
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
+      'Authorization': `Token ${token}`,
     },
   }).then(checkStatus)
     .then(parseJSON);
