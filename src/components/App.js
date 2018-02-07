@@ -123,6 +123,9 @@ class App extends React.Component {
           console.log('authenticateToken', response);
           response.token = val.token;
           dispatch(successLogin(response));
+        }).catch(e => {
+          console.log('authenticateToken error', e.status);
+          idbKeyval.delete('user');
         });
       }
     });
