@@ -24,11 +24,30 @@ class Navigate extends React.Component {
     console.log('loginclick');
     this.setState({ showLogin: true });
   }
+
+  renderLoginUsername() {
+    if (this.props.isAuthenticated) {
+      return (
+        <Button inverted style={{ marginLeft: '0.5em' }}>
+          {this.props.username}
+        </Button>);
+    } else {
+      return (
+        <React.Fragment>
+          <Button inverted onClick={this.handleLoginClick}>
+            Log in
+          </Button>
+          <Button inverted style={{ marginLeft: '0.5em' }}>
+            Sign Up
+          </Button>
+        </React.Fragment>
+      );
+    }
+  }
+
   render() {
     const { router } = this.context;
     console.log('router ', router);
-    const loginVisibility = this.props.isAuthenticated ? 'hidden' : 'visible';
-    const userVisibility = this.props.isAuthenticated ? 'visible' : 'hidden';
     return (
       <Segment
         inverted
@@ -59,20 +78,12 @@ class Navigate extends React.Component {
             </Menu.Item>
 
             <Menu.Item position='right'>
-              <Button inverted style={{ visibility: loginVisibility }} onClick={this.handleLoginClick}>
-                Log in
-              </Button>
-              <Button inverted style={{ marginLeft: '0.5em', visibility: loginVisibility }}>
-                Sign Up
-              </Button>
-              <Button inverted style={{ marginLeft: '0.5em', visibility: userVisibility }}>
-                {this.props.username}
-              </Button>
+              {this.renderLoginUsername()}
             </Menu.Item>
           </Menu>
         </Container>
         {this.state.showLogin && !this.props.isAuthenticated ?
-          <Login active {...this.props} />
+          <Login {...this.props} />
           : null}
       </Segment >
     );
