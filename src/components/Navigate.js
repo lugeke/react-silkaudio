@@ -70,16 +70,20 @@ class Navigate extends React.Component {
               name='recent'
               active={activeItem === 'recent'}
               onClick={this.handleItemClick}
+              as={Link}
+              to='/audiobooks/recent'
             >
-              <Link to='/audiobooks/recent'> Recent </Link>
+              Recent
             </Menu.Item>
 
             <Menu.Item
               name='all'
               active={activeItem === 'all'}
               onClick={this.handleItemClick}
+              as={Link}
+              to='/audiobooks/all'
             >
-              <Link to='/audiobooks/all'> All </Link>
+              All
             </Menu.Item>
 
             <Menu.Item position='right'>
