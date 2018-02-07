@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dimmer } from 'semantic-ui-react';
 
-const DimmerPage = ComposedComponent => class extends React.Component {
+const DimmerPage = WrappedComponent => class extends React.Component {
   state = {
     active: true,
   }
@@ -21,7 +21,7 @@ const DimmerPage = ComposedComponent => class extends React.Component {
         onClickOutside={this.handleClose}
         page
       >
-        <ComposedComponent {...this.props} />
+        <WrappedComponent {...this.props} />
       </Dimmer>
     );
   }
