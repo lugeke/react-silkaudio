@@ -1,4 +1,3 @@
-/* eslint-disable prefer-destructuring */
 import { connect } from 'react-redux';
 import React from 'react';
 import { onAudioPlay, onAudioPause,
@@ -69,7 +68,7 @@ const mapStatesToProps = (state) => {
   if (playStatus.playId === 0) {
     progress = 0;
   } else {
-    progress = recentListen.allIds[playStatus.playId].progress;
+    ({ progress } = recentListen.allIds[playStatus.playId]);
   }
   return {
     playId: playStatus.playId,
