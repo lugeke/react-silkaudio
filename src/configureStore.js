@@ -1,7 +1,6 @@
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
-import idbKeyval from 'idb-keyval';
 
 import reducer from './reducers';
 import saveRecentListen from './middlewares';
@@ -16,11 +15,6 @@ const configureStore = () => {
     reducer,
     applyMiddleware(...middleware),
   );
-
-
-  store.subscribe(() => {
-    idbKeyval.set('recentListen', store.getState().recentListen);
-  });
 
   return store;
 };
