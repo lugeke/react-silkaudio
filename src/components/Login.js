@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form } from 'semantic-ui-react';
+import { Button, Form, Message } from 'semantic-ui-react';
 
 import { login } from '../actions';
 
@@ -22,9 +22,13 @@ class LoginForm extends React.Component {
 
   render() {
     const { username, password } = this.state;
-    const { isAuthenticating } = this.props;
+    const { isAuthenticating, error } = this.props;
     return (
-      <Form className='loginForm' onSubmit={this.handleLogin} >
+      <Form
+        error={error !== ''}
+        className='loginForm'
+        onSubmit={this.handleLogin}
+      >
         <Form.Input
           name='username'
           placeholder='username'
@@ -37,6 +41,10 @@ class LoginForm extends React.Component {
           placeholder='password'
           value={password}
           onChange={this.handleChange}
+        />
+        <Message
+          error
+          header={error}
         />
         <Button
           type='submit'

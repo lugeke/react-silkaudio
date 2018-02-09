@@ -3,32 +3,35 @@ import {
   LOGIN_FAILURE,
 } from '../actions';
 
-const userReducer = (state = {
+const defaultState = {
   username: '',
   isAuthenticated: false,
   isAuthenticating: false,
   token: '',
-}, action) => {
+  error: '',
+};
+
+const userReducer = (state = defaultState, action) => {
   switch (action.type) {
     case LOGIN_REQUEST: {
       return {
+        ...defaultState,
         isAuthenticating: true,
-        isAuthenticated: false,
       };
     }
     case LOGIN_SUCCESS: {
       const { data } = action;
       return {
+        ...defaultState,
         username: data.username,
-        isAuthenticating: false,
         isAuthenticated: true,
         token: data.token,
       };
     }
     case LOGIN_FAILURE: {
       return {
-        isAuthenticating: false,
-        isAuthenticated: false,
+        ...defaultState,
+        error: action.error,
       };
     }
     default: {

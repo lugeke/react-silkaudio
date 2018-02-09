@@ -102,6 +102,7 @@ const mapStateToProps = (state) => {
     isAuthenticated: state.user.isAuthenticated,
     isAuthenticating: state.user.isAuthenticating,
     username: state.user.username,
+    error: state.user.error,
   };
 };
 

@@ -132,7 +132,23 @@ export function login(username, password) {
       saveLoginUser(response);
       dispatch(requestRecentRemote(response.token));
     }).catch(error => {
-      dispatch(failLogin(error));
+      console.log(error);
+      if (typeof error.response !== 'undefined' &&
+      error.response.status === 401) {
+        // Invalid authentication credentials
+        return error.response.json().then((data) => {
+          console.log(data);
+          dispatch(failLogin(data.detail));
+        });
+      } else if (typeof error.response !== 'undefined' &&
+      error.response.status >= 500) {
+        // Server side error
+        dispatch(failLogin('A server error occurred while sending your data!'));
+      } else {
+        // Most likely connection issues
+        dispatch(failLogin('Connection Error'));
+      }
+      return Promise.resolve();
     });
   };
 }
