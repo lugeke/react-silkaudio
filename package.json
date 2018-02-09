@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "eslint-config-airbnb": "^16.1.0",
-    "hls.js": "^0.8.9",
     "idb-keyval": "^2.3.0",
     "lodash": "^4.17.4",
     "prop-types": "^15.6.0",
