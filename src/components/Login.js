@@ -12,7 +12,7 @@ class LoginForm extends React.Component {
   }
 
   handleChange = (e, { name, value }) => {
-    this.setState({ [name]: value });
+    this.setState({ [name]: value.trim() });
   }
 
   state = {

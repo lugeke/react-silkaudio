@@ -36,6 +36,18 @@ export function loginUser(username, password) {
     .then(parseJSON);
 }
 
+export function registerUser(email, username, password) {
+  return fetch('/api/v1.0/accounts/register/', {
+    method: 'post',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email, username, password }),
+  }).then(checkStatus)
+    .then(parseJSON);
+}
+
 export function getHistories(token) {
   return fetch('/api/v1.0/history/', {
     headers: {
@@ -51,9 +63,9 @@ export function updateHistory(data, token) {
     method: 'put',
     body: JSON.stringify(data),
     headers: {
-      'Accept': 'application/json',
+      Accept: 'application/json',
       'Content-Type': 'application/json',
-      'Authorization': `Token ${token}`,
+      Authorization: `Token ${token}`,
     },
   }).then(checkStatus)
     .then(parseJSON);

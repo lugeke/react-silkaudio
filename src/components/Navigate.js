@@ -12,34 +12,43 @@ import {
 
 import LoginForm from './Login';
 import DimmerPage from './DimmerPage';
+import RegisterForm from './Register';
 
+const Register = DimmerPage(RegisterForm);
 const Login = DimmerPage(LoginForm);
 
 class Navigate extends React.Component {
   state = {
     showLogin: false,
+    showRegister: false,
     activeItem: 'recent',
   }
-  handleLoginClick = (e) => {
-    console.log('loginclick');
-    this.setState({ showLogin: true });
+
+  handleClick = (e, data) => {
+    console.log('loginclick data', data);
+    this.setState(state => ({ [data.name]: !state[data.name] }));
   }
 
   handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
   renderLoginUsername() {
-    if (this.props.isAuthenticated) {
+    if (this.props.user.isAuthenticated) {
       return (
         <Button inverted style={{ marginLeft: '0.5em' }}>
-          {this.props.username}
+          {this.props.user.username}
         </Button>);
     } else {
       return (
         <React.Fragment>
-          <Button inverted onClick={this.handleLoginClick}>
+          <Button inverted name='showLogin' onClick={this.handleClick}>
             Log in
           </Button>
-          <Button inverted style={{ marginLeft: '0.5em' }}>
+          <Button
+            name='showRegister'
+            inverted
+            onClick={this.handleClick}
+            style={{ marginLeft: '0.5em' }}
+          >
             Sign Up
           </Button>
         </React.Fragment>
@@ -49,6 +58,7 @@ class Navigate extends React.Component {
 
   render() {
     const { activeItem } = this.state;
+    console.log('navigate render state ', this.state);
     return (
       <Segment
         inverted
@@ -90,8 +100,19 @@ class Navigate extends React.Component {
             </Menu.Item>
           </Menu>
         </Container>
-        { this.state.showLogin && !this.props.isAuthenticated ?
-          <Login {...this.props} active /> : null }
+        <Login
+          {...this.props.user}
+          dispatch={this.props.dispatch}
+          close={() => this.handleClick(null, { name: 'showLogin' })}
+          active={this.state.showLogin && !this.props.user.isAuthenticated}
+        />
+        <Register
+          {...this.props.register}
+          dispatch={this.props.dispatch}
+          close={() => this.handleClick(null, { name: 'showRegister' })}
+          active={this.state.showRegister && !this.props.register.isRegistered}
+        />
+
       </Segment >
     );
   }
@@ -99,10 +120,8 @@ class Navigate extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    isAuthenticated: state.user.isAuthenticated,
-    isAuthenticating: state.user.isAuthenticating,
-    username: state.user.username,
-    error: state.user.error,
+    user: state.user,
+    register: state.register,
   };
 };
 

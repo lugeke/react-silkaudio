@@ -1,7 +1,7 @@
 import idbKeyval from 'idb-keyval';
 
 import {
-  getAudiobooks, loginUser, getHistories,
+  getAudiobooks, loginUser, getHistories, registerUser,
 } from '../utils';
 
 
@@ -21,6 +21,10 @@ export const SAVE_PROGRESS = 'SAVE_PROGRESS';
 export const LOGIN_REQUEST = 'LOGIN_REQUEST';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
+
+export const REGISTER_REQUEST = 'REGISTER_REQUEST';
+export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
+export const REGISTER_FAILURE = 'REGISTER_FAILURE';
 
 export const RECENT_SUCCESS = 'RECENT_SUCCESS';
 export function onAudioPlay(id) {
@@ -147,6 +151,57 @@ export function login(username, password) {
       } else {
         // Most likely connection issues
         dispatch(failLogin('Connection Error'));
+      }
+      return Promise.resolve();
+    });
+  };
+}
+
+
+function requestRegister() {
+  return {
+    type: REGISTER_REQUEST,
+  };
+}
+
+function successRegister(data) {
+  return {
+    type: REGISTER_SUCCESS,
+    data,
+  };
+}
+
+function failRegister(error) {
+  return {
+    type: REGISTER_FAILURE,
+    error,
+  };
+}
+
+
+export function register(email, username, password) {
+  return dispatch => {
+    dispatch(requestRegister());
+    return registerUser(email, username, password).then(response => {
+      dispatch(successRegister(response));
+    }).catch(error => {
+      console.log(error);
+      if (typeof error.response !== 'undefined' &&
+      error.response.status === 400) {
+        // Invalid form data
+        return error.response.json().then((data) => {
+          console.log(data);
+          dispatch(failRegister(data));
+        });
+      } else if (typeof error.response !== 'undefined' &&
+      error.response.status >= 500) {
+        // Server side error
+        dispatch(failRegister({
+          server: [ 'A server error occurred while sending your data!' ],
+        }));
+      } else {
+        // Most likely connection issues
+        dispatch(failRegister({ connect: [ 'Connection Error' ] }));
       }
       return Promise.resolve();
     });

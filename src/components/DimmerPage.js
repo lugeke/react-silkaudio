@@ -3,14 +3,17 @@ import { Dimmer } from 'semantic-ui-react';
 
 const DimmerPage = WrappedComponent => class extends React.Component {
   state = {
-    active: true,
+    active: false,
   }
 
   handleOpen = () => this.setState({ active: true })
-  handleClose = () => this.setState({ active: false })
+  handleClose = () => {
+    this.setState({ active: false });
+    this.props.close();
+  }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ active: this.props.active });
+    this.setState({ active: nextProps.active });
   }
 
   render() {
