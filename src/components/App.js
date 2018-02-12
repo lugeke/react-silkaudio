@@ -109,10 +109,10 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => {
   const {
-    playStatus, audiobooks, recentListen,
+    playStatus: { playId, pause }, audiobooks, recentListen,
   } = state;
   return {
-    playStatus, audiobooks, recentListen,
+    playId, pause, recentListen, audiobooks,
   };
 };
 
