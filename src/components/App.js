@@ -8,7 +8,7 @@ import {
 import { connect } from 'react-redux';
 import {
   withRouter,
-  Route,
+  Route, Redirect,
   Switch } from 'react-router-dom';
 import idbKeyval from 'idb-keyval';
 
@@ -80,7 +80,7 @@ class App extends React.Component {
           <Route
             path='/'
             exact
-            render={(props) => (<RecentAudiobooks {...this.props} />)}
+            render={() => (<Redirect to='/audiobooks/recent' />)}
           />
         </Switch>
         <AudioPlay />
