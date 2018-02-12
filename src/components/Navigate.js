@@ -7,7 +7,8 @@ import {
   Segment,
 } from 'semantic-ui-react';
 import {
-  Link,
+  withRouter,
+  NavLink,
 } from 'react-router-dom';
 
 import LoginForm from './Login';
@@ -28,8 +29,6 @@ class Navigate extends React.Component {
     console.log('loginclick data', data);
     this.setState(state => ({ [data.name]: !state[data.name] }));
   }
-
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
   renderLoginUsername() {
     if (this.props.user.isAuthenticated) {
@@ -76,24 +75,16 @@ class Navigate extends React.Component {
             size='large'
           >
             <Menu.Item
-              name='recent'
-              active={activeItem === 'recent'}
-              onClick={this.handleItemClick}
-              as={Link}
+              as={NavLink}
               to='/audiobooks/recent'
-            >
-              Recent
-            </Menu.Item>
+              content='Recent'
+            />
 
             <Menu.Item
-              name='all'
-              active={activeItem === 'all'}
-              onClick={this.handleItemClick}
-              as={Link}
+              as={NavLink}
               to='/audiobooks/all'
-            >
-              All
-            </Menu.Item>
+              content='All'
+            />
 
             <Menu.Item position='right'>
               {this.renderLoginUsername()}
@@ -125,4 +116,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Navigate);
+export default withRouter(connect(mapStateToProps)(Navigate));
