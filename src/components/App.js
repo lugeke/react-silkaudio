@@ -64,44 +64,23 @@ class HomepageLayout extends React.Component {
 
 class App extends React.Component {
   render() {
-    const {
-      playStatus, audiobooks, recentListen,
-    } = this.props;
     return (
       <HomepageLayout >
         <Switch>
           <Route
             path='/audiobooks/recent'
-            render={(props) =>
-              (<RecentAudiobooks
-                playId={playStatus.playId}
-                pause={playStatus.pause}
-                recentListen={recentListen}
-              />)
-            }
+            render={(props) => (<RecentAudiobooks {...this.props} />)}
           />
 
           <Route
             path='/audiobooks/all'
-            render={(props) =>
-              (<AllAudiobooks
-                playId={playStatus.playId}
-                pause={playStatus.pause}
-                audiobooks={audiobooks}
-              />)
-            }
+            render={(props) => (<AllAudiobooks {...this.props} />)}
           />
 
           <Route
             path='/'
             exact
-            render={(props) =>
-              (<RecentAudiobooks
-                playId={playStatus.playId}
-                pause={playStatus.pause}
-                recentListen={recentListen}
-              />)
-            }
+            render={(props) => (<RecentAudiobooks {...this.props} />)}
           />
         </Switch>
         <AudioPlay />
@@ -112,12 +91,6 @@ class App extends React.Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
-    // idbKeyval.get('recentListen').then(val => {
-    //   if (val) {
-    //     console.log('recentListen', val);
-    //     dispatch(requestRecentLocal(val));
-    //   }
-    // });
     idbKeyval.get('user').then(val => {
       if (val) {
         authenticateToken(val.token).then(response => {
@@ -134,6 +107,13 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => (state);
+const mapStateToProps = (state) => {
+  const {
+    playStatus, audiobooks, recentListen,
+  } = state;
+  return {
+    playStatus, audiobooks, recentListen,
+  };
+};
 
 export default withRouter(connect(mapStateToProps)(App));
