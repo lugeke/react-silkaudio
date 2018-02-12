@@ -22,7 +22,6 @@ class Navigate extends React.Component {
   state = {
     showLogin: false,
     showRegister: false,
-    activeItem: 'recent',
   }
 
   handleClick = (e, data) => {
@@ -56,7 +55,6 @@ class Navigate extends React.Component {
   }
 
   render() {
-    const { activeItem } = this.state;
     console.log('navigate render state ', this.state);
     return (
       <Segment
